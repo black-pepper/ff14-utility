@@ -6,8 +6,9 @@ import config from '@/config';
 function generateDates(startDate, endDate) {
   const dates = [];
   let currentDate = new Date(startDate);
+  currentDate.setHours(0, 0, 0, 0);
   while (currentDate <= endDate) {
-    const formattedDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식 변환
+    const formattedDate = currentDate.toLocaleDateString('en-CA').split('T')[0]; // YYYY-MM-DD 형식 변환
     dates.push({ date: formattedDate, checks: Array(config.missions.length).fill(false) });
     currentDate.setDate(currentDate.getDate() + 1); // 하루 증가
   }
@@ -29,7 +30,7 @@ function generatePeriodList(startDate, endDate) {
   }
   return dates;
 }
-const selectedPeriod = ref(config.endDate.toISOString().split('T')[0]);
+const selectedPeriod = ref(config.endDate.toLocaleDateString('en-CA').split('T')[0]);
 const periodList = generatePeriodList(today, config.endDate); 
 const countPoint = ref(6);
 const countPointList = Array.from({ length: config.missions.length }, (_, i) => i + 1);

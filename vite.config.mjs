@@ -33,6 +33,7 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/FF14-Utilliy/',
   define: { 'process.env': {} },
   resolve: {
     alias: {
