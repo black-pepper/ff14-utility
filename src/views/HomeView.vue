@@ -30,7 +30,7 @@ function generatePeriodList(startDate, endDate) {
   }
   return dates;
 }
-const selectedPeriod = ref(config.endDate.toLocaleDateString('en-CA').split('T')[0]);
+const selectedPeriod = ref(config.endDate.toLocaleDateString('en-CA'));
 const periodList = generatePeriodList(today, config.endDate); 
 const countPoint = ref(6);
 const countPointList = Array.from({ length: config.missions.length }, (_, i) => i + 1);
@@ -43,11 +43,21 @@ const totalScore = computed(() =>
   missionStatus.reduce((total, item) => {
     let score = item.checks.filter(Boolean).length // check 배열에서 true 개수 세기
     return total + score
-  }, 0) 
-  + (uniqueMissionStatus[0] ? config.uniqueMissions[0].score : 0) 
-  + (uniqueMissionStatus[1] ? config.uniqueMissions[1].score : 0)
+  }, 0) + uniqueMissionsScore.value
 );
 
+const uniqueMissionsScore = computed(() =>
+  uniqueMissionStatus.reduce((total, checked, index) => {
+    return total + (checked ? config.uniqueMissions[index].score : 0);
+  }, 0)
+);
+
+const totalScoreYesterday = computed(() =>
+  missionStatus.slice(0, yesterdayIndex.value).reduce((total, item) => {
+    let score = item.checks.filter(Boolean).length // check 배열에서 true 개수 세기
+    return total + score
+  }, 0) + uniqueMissionsScore.value
+);
 
 //이벤트 시작일로부터 며칠이 지났는지 계산
 const yesterdayIndex = computed(() => {
@@ -56,15 +66,6 @@ const yesterdayIndex = computed(() => {
   const diff = today.getTime() - new Date(startDate).getTime();
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 });
-//어제까지의 점수 합계
-const totalScoreYesterday = computed(() =>
-  missionStatus.slice(0, yesterdayIndex.value).reduce((total, item) => {
-    let score = item.checks.filter(Boolean).length // check 배열에서 true 개수 세기
-    return total + score
-  }, 0) 
-  + (uniqueMissionStatus[0] ? config.uniqueMissions[0].score : 0) 
-  + (uniqueMissionStatus[1] ? config.uniqueMissions[1].score : 0)
-);
 
 //오늘 날짜 표시
 const getRowStyle = (item) => {
@@ -147,7 +148,7 @@ watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
         <tr>
           <th rowspan="2" class="text-center">날짜</th>
           <th class="text-center" :colspan="missionStatus[0]?.checks.length">목록</th>
-          <th rowspan="2" class="text-center">합계<br>{{ totalScore }}/100</th>
+          <th rowspan="2" class="text-center">합계<br>{{ totalScore }}/{{ config.targetScore }}</th>
         </tr>
         <tr>
           <th v-for="mission in config.missions" class="text-center">

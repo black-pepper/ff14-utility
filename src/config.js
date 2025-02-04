@@ -3,6 +3,7 @@ export default {
     startDate: new Date('2025-01-21T12:00:00'),
     endDate: new Date('2025-02-17'),
     url: "https://www.ff14.co.kr/events/2025/A0121",
+    targetScore: 100,
     missions: [
         {
             title: "야채",
@@ -31,7 +32,7 @@ export default {
     ],
     uniqueMissions: [
         {
-            title:"'아르카디아 선수권:라이트헤비급 4' 완료",
+            title:"'아르카디아 선수권: 라이트헤비급4' 완료",
             score: 10,
         }, 
         {
