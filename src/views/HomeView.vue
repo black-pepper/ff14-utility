@@ -5,7 +5,7 @@ import { useMissionStore } from '@/composables/useMissionStore';
 import { calculateScore, getRowStyle } from '@/utils/useMissionUtils';
 import { useScoreCalculations } from '@/composables/useScoreCalculations';
 
-const { missionStatus, uniqueMissionStatus, totalScore, selectedPeriod, countPoint, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
+const { missionStatus, uniqueMissionStatus, panels, selectedPeriod, countPoint, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
 
 const today = new Date();
 function generatePeriodList(startDate, endDate) {
@@ -22,11 +22,11 @@ function generatePeriodList(startDate, endDate) {
 }
 const periodList = generatePeriodList(today, config.endDate); 
 const countPointList = Array.from({ length: config.missions.length }, (_, i) => i + 1);
-const panels = ref([0, 1]);
 
 const {
       totalScoreYesterday,
-      expectedScore
+      expectedScore,
+      totalScore
     } = useScoreCalculations(config, missionStatus, uniqueMissionStatus, selectedPeriod, countPoint);
 
 // 해당 날짜의 체크박스가 모두 선택된 상태인지 확인
@@ -45,7 +45,7 @@ onMounted(() => {
 });
 
 // 로컬 데이터 저장하기
-watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
+watch([missionStatus, uniqueMissionStatus, panels], saveToLocalStorage, { deep: true });
 </script>
 
 <template>

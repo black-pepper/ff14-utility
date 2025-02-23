@@ -25,18 +25,24 @@ export function useScoreCalculations(config, missionStatus, uniqueMissionStatus,
     const selectedDate = new Date(selectedPeriod.value);
     selectedDate.setHours(0, 0, 0, 0);
     const diff = selectedDate.getTime() - Date.now();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1;
+    return Math.max(Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1, 0);
   });
 
   const expectedScore = computed(() => {
     return totalScoreYesterday.value + (selectedDateIndex.value * countPoint.value);
   });
 
+  const totalScore = computed(() =>
+    missionStatus.reduce((total, item) => total + item.checks.filter(Boolean).length, 0) +
+    uniqueMissionStatus.reduce((sum, status, i) => sum + (status ? config.uniqueMissions[i].score : 0), 0)
+  );
+
   return {
     uniqueMissionsScore,
     totalScoreYesterday,
     yesterdayIndex,
     selectedDateIndex,
-    expectedScore
+    expectedScore,
+    totalScore
   };
 }
