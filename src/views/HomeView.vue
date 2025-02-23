@@ -1,21 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
 import config from '@/config';
+import { useMissionStore } from '@/composables/useMissionStore';
+import { calculateScore, getRowStyle } from '@/utils/useMissionUtils';
+import { useScoreCalculations } from '@/composables/useScoreCalculations';
 
-// 데이터 테이블 생성
-function generateDates(startDate, endDate) {
-  const dates = [];
-  let currentDate = new Date(startDate);
-  currentDate.setHours(0, 0, 0, 0);
-  while (currentDate <= endDate) {
-    const formattedDate = currentDate.toLocaleDateString('en-CA').split('T')[0]; // YYYY-MM-DD 형식 변환
-    dates.push({ date: formattedDate, checks: Array(config.missions.length).fill(false) });
-    currentDate.setDate(currentDate.getDate() + 1); // 하루 증가
-  }
-  return dates;
-}
-const missionStatus = reactive(generateDates(config.startDate, config.endDate))
-const uniqueMissionStatus = reactive(new Array(config.uniqueMissions.length).fill(false));
+const { missionStatus, uniqueMissionStatus, totalScore, selectedPeriod, countPoint, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
 
 const today = new Date();
 function generatePeriodList(startDate, endDate) {
@@ -30,67 +20,14 @@ function generatePeriodList(startDate, endDate) {
   }
   return dates;
 }
-const selectedPeriod = ref(config.endDate.toLocaleDateString('en-CA'));
 const periodList = generatePeriodList(today, config.endDate); 
-const countPoint = ref(6);
 const countPointList = Array.from({ length: config.missions.length }, (_, i) => i + 1);
+const panels = ref([0, 1]);
 
-const calculateScore = (item: any) => {
-  return item.checks.reduce((sum, checked) => sum + checked, 0)
-}
-
-const totalScore = computed(() =>
-  missionStatus.reduce((total, item) => {
-    let score = item.checks.filter(Boolean).length // check 배열에서 true 개수 세기
-    return total + score
-  }, 0) + uniqueMissionsScore.value
-);
-
-const uniqueMissionsScore = computed(() =>
-  uniqueMissionStatus.reduce((total, checked, index) => {
-    return total + (checked ? config.uniqueMissions[index].score : 0);
-  }, 0)
-);
-
-const totalScoreYesterday = computed(() =>
-  missionStatus.slice(0, yesterdayIndex.value).reduce((total, item) => {
-    let score = item.checks.filter(Boolean).length // check 배열에서 true 개수 세기
-    return total + score
-  }, 0) + uniqueMissionsScore.value
-);
-
-//이벤트 시작일로부터 며칠이 지났는지 계산
-const yesterdayIndex = computed(() => {
-  const startDate = new Date(config.startDate);
-  startDate.setHours(0, 0, 0, 0);
-  const diff = today.getTime() - new Date(startDate).getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
-});
-
-//오늘 날짜 표시
-const getRowStyle = (item) => {
-  today.setHours(0, 0, 0, 0); // 오늘 날짜의 시간부분을 00:00:00으로 설정
-
-  const itemDate = new Date(item.date);
-  itemDate.setHours(0, 0, 0, 0); // item 날짜의 시간부분을 00:00:00으로 설정
-
-  if (itemDate.getTime() === today.getTime()) {
-    return 'bg-primary'; // 오늘 날짜라면 배경색 설정
-  }
-
-  return '';
-};
-
-//선택일자까지 며칠 남았는지 계산
-const selectedDateIndex = computed(() => {
-  const selectedDate = new Date(selectedPeriod.value);
-  selectedDate.setHours(0, 0, 0, 0);
-  const diff = selectedDate.getTime() - today.getTime();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24))+1;
-});
-const expectedScore = computed(() => {
-  return totalScoreYesterday.value + (selectedDateIndex.value * countPoint.value)
-})
+const {
+      totalScoreYesterday,
+      expectedScore
+    } = useScoreCalculations(config, missionStatus, uniqueMissionStatus, selectedPeriod, countPoint);
 
 // 해당 날짜의 체크박스가 모두 선택된 상태인지 확인
 const isAllChecked = (index) => {
@@ -103,46 +40,43 @@ const toggleAllChecks = (index) => {
   missionStatus[index].checks = missionStatus[index].checks.map(() => !allChecked);
 };
 
-// 로컬 데이터 불러오기
-const loadFromLocalStorage = () => {
-  const savedMissionStatus = localStorage.getItem('missionStatus');
-  const savedUniqueMissionStatus = localStorage.getItem('uniqueMissionStatus');
-  const savedLastSaveTime = localStorage.getItem('lastSaveTime');
-  if (savedMissionStatus) {
-    // 저장된 데이터가 이벤트 시작일보다 이전인 경우, 저장된 데이터를 삭제
-    if (savedLastSaveTime && new Date(savedLastSaveTime) < new Date(config.startDate)) {
-      localStorage.removeItem('missionStatus');
-      localStorage.removeItem('uniqueMissionStatus');
-      return;
-    } else {
-      // 저장된 데이터가 있으면 불러옴
-      missionStatus.splice(0, missionStatus.length, ...JSON.parse(savedMissionStatus));
-      uniqueMissionStatus.splice(0, uniqueMissionStatus.length, ...JSON.parse(savedUniqueMissionStatus));
-    }
-  }
-};
-
 onMounted(() => {
   loadFromLocalStorage(); // 컴포넌트가 마운트될 때 로컬 스토리지에서 데이터를 불러옴
 });
 
 // 로컬 데이터 저장하기
-const saveToLocalStorage = () => {
-  localStorage.setItem('missionStatus', JSON.stringify(missionStatus));
-  localStorage.setItem('uniqueMissionStatus', JSON.stringify(uniqueMissionStatus));
-  localStorage.setItem('lastSaveTime', JSON.stringify(Date.now()));
-};
-
 watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
 </script>
 
 <template>
   <v-container>
-    <h2>{{ config.eventName }}</h2>
-    <div>&nbsp;</div>
-    <v-checkbox v-for="(mission, index) in config.uniqueMissions" 
-    :key="index" v-model="uniqueMissionStatus[index]" :label="mission.title" density="compact"/>
+    <v-container>
+    <v-row justify="space-between" align="center">
+      <v-col cols="auto">
+      <h1>{{ config.eventName }}</h1>
+      <p>{{ config.startDate.toLocaleDateString('en-CA') }} ~ {{  config.endDate.toLocaleDateString('en-CA') }}</p>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn variant="outlined" :href="config.url" target="_blank">이벤트 페이지 바로가기</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+    <v-expansion-panels variant="accordion" v-model="panels" multiple>
+    <v-expansion-panel>
+      <v-expansion-panel-title v-slot="{ expanded }">
+        <h3>{{ config.uniqueMissionTitle }}</h3>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <v-checkbox v-for="(mission, index) in config.uniqueMissions" 
+      :key="index" v-model="uniqueMissionStatus[index]" :label="mission.title" density="compact"/>
+      </v-expansion-panel-text>
     <!-- <v-card variant="outlined" style="border-color: lightgray; overflow-y: auto;" max-height="500"> -->
+    </v-expansion-panel>
+    <v-expansion-panel>
+      <v-expansion-panel-title v-slot="{ expanded }">
+        <h3>{{ config.missionTitle }}</h3>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
     <v-table variant="outlined" density="compact" height="500" fixed-header>
       <thead>
         <tr>
@@ -170,6 +104,10 @@ watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
         </tr>
       </tbody>
     </v-table>
+  </v-expansion-panel-text>
+  </v-expansion-panel>
+  <v-expansion-panel readonly expand-icon="">
+    <v-expansion-panel-title>
   <!-- </v-card> -->
   <div>&nbsp;</div>
   <v-row align="center" justify="start">
@@ -203,10 +141,12 @@ watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
       <span></span>
     </v-col>
   </v-row>
-  <div>&nbsp;</div>
-  <v-col cols="auto">
-    <v-btn variant="outlined" :href="config.url" target="_blank">이벤트 페이지 바로가기</v-btn>
-  </v-col>
+    </v-expansion-panel-title>
+  <v-expansion-panel-text>
+    ??
+  </v-expansion-panel-text>
+  </v-expansion-panel>
+  </v-expansion-panels>
   </v-container>
 </template>
 <style scoped>
