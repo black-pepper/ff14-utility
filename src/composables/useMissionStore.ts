@@ -1,6 +1,6 @@
 // composables/useMissionStore.ts
 import { reactive, ref, computed, watch, onMounted } from 'vue';
-import config from '@/config';
+import config from '@/config/eventConfig';
 
 export function useMissionStore() {
   const missionStatus = reactive(generateData(config.startDate, config.endDate))

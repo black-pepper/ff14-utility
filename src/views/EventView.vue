@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, watch } from 'vue'
-import config from '@/config';
+import config from '@/config/eventConfig';
 import { useMissionStore } from '@/composables/useMissionStore';
 import { calculateScore, getRowStyle } from '@/utils/useMissionUtils';
 import { useScoreCalculations } from '@/composables/useScoreCalculations';
