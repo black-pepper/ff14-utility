@@ -151,26 +151,32 @@ export default {
         },
         {
             name: "이노센스 귀베르 피리",
+            description: "극 이노센스 토벌전",
             tomestones: 50,
         },
         {
             name: "알테 로이테 크리스탈",
+            description: "차원의 틈 오메가(영웅): 델타편 4 (일반 레이드)",
             tomestones: 50,
         },
         {
             name: "하데스 갑주",
+            description: "갑주제작사 레벨80 제작 (갑주제작사의 비전서:제7권 필요)",
             tomestones: 50,
         },
         {
             name: "헤어카탈로그: 한 가닥 땋은 머리",
+            description: "자트노르 고원 - 저항군 정비병 (보즈야 금화, 백금화 거래)",
             tomestones: 50,
         },
         {
             name: "오케스트리온 악보: Twice Stricken",
+            description: "희망의 낙원 에덴: 공명편 1 (일반 레이드)",
             tomestones: 50,
         },
         {
             name: "연기 교본: 저주",
+            description: "남부 보즈야 전선 / 자트노르 고원 - 저항군 보급병 (보즈야 클러스터 거래)",
             tomestones: 50,
         },
         {
@@ -183,6 +189,7 @@ export default {
         },
         {
             name: "수건 세트",
+            description: "늑대우리 부두 - 물자 지급관 (명예 점수 거래)",
             tomestones: 30,
         },
         {
@@ -191,70 +198,87 @@ export default {
         },
         {
             name: "도마뱀 뿔피리",
+            description: "남부 다날란 - 아말쟈족 만물상",
             tomestones: 30,
         },
         {
             name: "월계수 구부 뿔피리",
+            description: "검은장막 숲 동부삼림 - 실프족 만물상",
             tomestones: 30,
         },
         {
             name: "츠쿠요미의 견신 피리",
+            description: "극 츠쿠요미 토벌전",
             tomestones: 30,
         },
         {
             name: "주작의 견신 피리",
+            description: "극 주작 토벌전",
             tomestones: 30,
         },
         {
             name: "키키룬 수납장",
+            description: "목수 레벨80 제작",
             tomestones: 20,
         },
         {
             name: "모그리 여닫이책상",
+            description: "목수 레벨80 제작",
             tomestones: 20,
         },
         {
             name: "검은장막 정자",
+            description: "연금술사 레벨80 제작",
             tomestones: 20,
         },
         {
             name: "정원용 도구 선반",
+            description: "연금술사 레벨80 제작",
             tomestones: 20,
         },
         {
             name: "벽걸이 별장식",
+            description: "연금술사 레벨86 제작",
             tomestones: 20,
         },
         {
             name: "아말쟈 인형",
+            description: "남부 다날란 - 아말자족 만물상",
             tomestones: 15,
         },
         {
             name: "상세 지도: 커르다스 서부고지",
+            description: "이슈가르드 하층 - 아르돌랭 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "상세 지도: 고지 드라바니아",
+            description: "이슈가르드 하층 - 아르돌랭 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "상세 지도: 저지 드라바니아",
+            description: "이슈가르드 하층 - 아르돌랭 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "상세 지도: 기라바니아 변방지대",
+            description: "쿠가네 - 에스트릴드 / 랄거의 손길 - 르우킨 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "상세 지도: 기라바니아 산악지대",
+            description: "쿠가네 - 에스트릴드 / 랄거의 손길 - 르우킨 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "상세 지도: 기라바니아 호반지대",
+            description: "쿠가네 - 에스트릴드 / 랄거의 손길 - 르우킨 (센추리오 휘장 거래)",
             tomestones: 10,
         },
         {
             name: "시스이 상의 / 하의",
+            description: "시스이 궁(던전)",
             tomestones: 15,
         },
         {
@@ -271,34 +295,42 @@ export default {
         },
         {
             name: "카드: 밴더스내치",
+            description: "고지 드라바니아 - 낭카 먹보 (트리플 트라이어드)",
             tomestones: 10,
         },
         {
             name: "카드: 누에",
+            description: "이딜샤이어 - 세이카 (트리플 트라이어드)",
             tomestones: 10,
         },
         {
             name: "카드: 츠쿠요미",
+            description: "일반/극 츠쿠요미 토벌전",
             tomestones: 7,
         },
         {
             name: "카드: 하데스",
+            description: "일반/극 하데스 토벌전",
             tomestones: 7,
         },
         {
             name: "카드: 2P",
+            description: "인형들의 군사 기지 (24인 레이드)",
             tomestones: 7,
         },
         {
             name: "응 모우 인형",
+            description: "크리스타리움 - 자일 / 율모어 - 일프로이 (마물 사냥 전리품 거래)",
             tomestones: 7,
         },
         {
             name: "아르마딜로 곡예사",
+            description: "말리카 큰우물 (던전)",
             tomestones: 7,
         },
         {
             name: "오케스트리온 악보: Seven Hundred Seventy-Seven Whiskers",
+            description: "아짐 대초원 - 교쇼 (나마즈오 금화 거래)",
             tomestones: 7,
         },
         {

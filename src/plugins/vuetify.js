@@ -14,6 +14,12 @@ import { createVuetify } from 'vuetify'
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: 'light',
+    themes: {
+      light: {
+        colors: {
+          primary: '#F5F5F5', // 🔥 예시: 주황색으로 변경
+        },
+      },
+    },
   },
 })
