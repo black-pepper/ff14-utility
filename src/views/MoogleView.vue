@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import config from '@/config/moogleConfig';
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, ref, watch, onMounted, watchEffect } from 'vue';
 //config.rewards의 개수만큼 0인 배열 생성
 const counts = ref<number[]>(Array(config.rewards.length).fill(0));
 const panels = ref([0]);
@@ -27,7 +27,7 @@ const loadFromLocalStorage = () => {
 };
 
 const rowStyles = computed(() =>
-  counts.value.map(count => count ? 'bg-primary' : '')
+  counts.value.map(count => count != 0 ? 'bg-primary' : '')
 );
 
 onMounted(() => {
