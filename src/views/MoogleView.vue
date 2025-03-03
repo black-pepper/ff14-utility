@@ -59,6 +59,7 @@ watch(counts, saveToLocalStorage, { deep: true });
     <v-table variant="outlined" density="compact" height="500" fixed-header>
       <thead>
         <tr>
+          <th class="text-center">분류</th>
           <th class="text-center">아이템</th>
           <th class="text-center">석판 수</th>
           <th class="text-center">개수</th>
@@ -67,6 +68,7 @@ watch(counts, saveToLocalStorage, { deep: true });
       </thead>
       <tbody>
         <tr v-for="(item, index) in config.rewards" :key="index" :class="rowStyles[index]">
+          <td class="text-center">{{ item.category }}</td>
           <td class="text-center" style="cursor:pointer">
             <v-tooltip v-if="item.description" :text="item.description">
               <template v-slot:activator="{ props }">
@@ -76,7 +78,7 @@ watch(counts, saveToLocalStorage, { deep: true });
             <span v-else>{{ item.name }}</span>
           </td>
           <td class="text-center">{{ item.tomestones }}</td>
-          <td class="text-center"  style="max-width: 150px;">
+          <td class="text-center"  style="max-width: 150px; min-width: 80px;">
             <v-text-field 
             v-model="counts[index]" 
             variant="outlined"
