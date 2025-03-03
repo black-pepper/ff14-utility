@@ -8,6 +8,7 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { routes } from 'vue-router/auto-routes'
+import MainView from '@/views/MainView.vue'
 import EventView from '../views/EventView.vue'
 import MoogleView from '@/views/MoogleView.vue'
 
@@ -17,6 +18,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      component: MainView,
+    },
+    {
+      path: '/event',
+      name: 'event',
       component: EventView,
     },
     {
@@ -24,6 +30,8 @@ const router = createRouter({
       name: 'moogle',
       component: MoogleView
     },
+    { path: '/:catchAll(.*)',
+      redirect: '/' },
   ],
 })
 
