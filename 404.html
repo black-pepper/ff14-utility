@@ -2,9 +2,14 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; URL='/utility/'">
+  <meta http-equiv="refresh" content="0; URL='/FF14-Utilliy/'">
   <script>
-    window.location.replace('/FF14-Utilliy/' + window.location.pathname.replace(/^\/FF14-Utilliy\//, ''));
+    var target = window.location.pathname.replace(/^\/FF14-Utilliy\//, '');
+    if (target === '' || target === '/') {
+      window.location.replace('/FF14-Utilliy/');
+    } else {
+      window.location.replace('/FF14-Utilliy/#' + target);
+    }
   </script>
 </head>
 <body>
