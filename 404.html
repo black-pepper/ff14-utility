@@ -2,11 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; URL='/'">
+  <meta http-equiv="refresh" content="0; URL='/utility/?redirect=' + encodeURIComponent(window.location.pathname + window.location.search)">
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirectTo = urlParams.get('redirect') || '/';
-    window.location.href = redirectTo;
+    const currentPath = window.location.pathname.replace('/ff14-utility/', ''); 
+    window.location.href = '/utility/?redirect=' + encodeURIComponent(currentPath + window.location.search);
   </script>
 </head>
 <body>
