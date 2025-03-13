@@ -77,25 +77,6 @@ export default {
             tomestones: 4
         }
     ],
-    weeklyMissions: [
-        {
-            title:"제 1주: 기공성 알렉산더: 기동편 4",
-            tomestones: 20,
-        },
-        {
-            title:"제 2주: 다이아몬드 웨폰 포획작전",
-            tomestones: 20,
-        },
-        {
-            title:"제 3주: ???",
-            tomestones: 20,
-        },
-        {
-            title:"제 4주: ???",
-            tomestones: 20,
-        }
-
-    ],
     weeklyMiniMissions: [
         {
             title: "제 1주: 돌발 임무",

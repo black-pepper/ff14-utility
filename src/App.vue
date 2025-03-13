@@ -17,7 +17,4 @@
 import { ref } from "vue";
 import AppDrawer from "@/components/AppDrawer.vue";
 const drawer = ref(false); // drawer 상태 추가
-const goHome = () => {
-  router.push("/");
-};
 </script>

@@ -54,4 +54,16 @@ router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
 
+router.beforeEach((to, from, next) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const redirectPath = urlParams.get('redirect');
+
+  if (redirectPath) {
+    window.history.replaceState(null, '', import.meta.env.BASE_URL + redirectPath);
+    next(redirectPath);
+  } else {
+    next();
+  }
+});
+
 export default router
