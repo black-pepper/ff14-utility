@@ -2,14 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; URL='/FF14-Utilliy/'">
+  <meta http-equiv="refresh" content="0; URL='/utility/?redirect=' + encodeURIComponent(window.location.pathname + window.location.search)">
   <script>
-    var target = window.location.pathname.replace(/^\/FF14-Utilliy\//, '');
-    if (target === '' || target === '/') {
-      window.location.replace('/FF14-Utilliy/');
-    } else {
-      window.location.replace('/FF14-Utilliy/#' + target);
-    }
+    window.location.href = '/ff14-utility/?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
   </script>
 </head>
 <body>
