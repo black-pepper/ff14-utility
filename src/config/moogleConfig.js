@@ -134,48 +134,50 @@ export default {
         },
         {
             name: "이노센스 귀베르 피리",
-            description: "극 이노센스 토벌전",
             category: "탈것",
+            description: "극 이노센스 토벌전",
             tomestones: 50,
         },
         {
             name: "알테 로이테 크리스탈",
-            description: "차원의 틈 오메가(영웅): 델타편 4 (일반 레이드)",
             category: "탈것",
+            description: "차원의 틈 오메가(영웅): 델타편 4 (일반 레이드)",
             tomestones: 50,
         },
         {
             name: "하데스 갑주",
             category: "기타",
-            description: "갑주제작사 레벨80 제작 (갑주제작사의 비전서:제7권 필요)",
+            description: "갑주제작사 레벨80 제작 (갑주제작사의 비전서:제7권 필요) [거래 가능]",
             tomestones: 50,
         },
         {
             name: "헤어카탈로그: 한 가닥 땋은 머리",
             category: "잡화",
-            description: "자트노르 고원 - 저항군 정비병 (보즈야 금화, 백금화 거래)",
+            description: "자트노르 고원 - 저항군 정비병 (보즈야 금화, 백금화 거래) [거래 가능]",
             tomestones: 50,
         },
         {
             name: "오케스트리온 악보: Twice Stricken",
             category: "악보",
-            description: "희망의 낙원 에덴: 공명편 1 (일반 레이드)",
+            description: "희망의 낙원 에덴: 공명편 1 (일반 레이드) [거래 가능]",
             tomestones: 50,
         },
         {
             name: "연기 교본: 저주",
             category: "잡화",
-            description: "남부 보즈야 전선 / 자트노르 고원 - 저항군 보급병 (보즈야 클러스터 거래)",
+            description: "남부 보즈야 전선 / 자트노르 고원 - 저항군 보급병 (보즈야 클러스터 거래) [거래 가능]",
             tomestones: 50,
         },
         {
             name: "연기 교본: 계략",
             category: "잡화",
+            description: "변이된 피로스 잠긴 상자 (에우레카) [거래 가능]",
             tomestones: 30,
         },
         {
             name: "캐주얼 재킷 궤짝",
             category: "잡화",
+            description: "쿠뽀 복권 : 1등 보상 [거래 가능]",
             tomestones: 30,
         },
         {
@@ -216,31 +218,31 @@ export default {
         {
             name: "키키룬 수납장",
             category: "소품/조경물",
-            description: "목수 레벨80 제작",
+            description: "목수 레벨80 제작 [거래 가능]",
             tomestones: 20,
         },
         {
             name: "모그리 여닫이책상",
             category: "소품/조경물",
-            description: "목수 레벨80 제작",
+            description: "목수 레벨80 제작 [거래 가능]",
             tomestones: 20,
         },
         {
             name: "검은장막 정자",
             category: "소품/조경물",
-            description: "연금술사 레벨80 제작",
+            description: "연금술사 레벨80 제작 [거래 가능]",
             tomestones: 20,
         },
         {
             name: "정원용 도구 선반",
             category: "소품/조경물",
-            description: "연금술사 레벨80 제작",
+            description: "연금술사 레벨80 제작 [거래 가능]",
             tomestones: 20,
         },
         {
             name: "벽걸이 별장식",
             category: "소품/조경물",
-            description: "연금술사 레벨86 제작",
+            description: "연금술사 레벨86 제작 [거래 가능]",
             tomestones: 20,
         },
         {
@@ -294,16 +296,19 @@ export default {
         {
             name: "특1등급 오래된 지도",
             category: "잡화",
+            description: "모그모그★컬렉션",
             tomestones: 15,
         },
         {
             name: "특2등급 오래된 지도",
             category: "잡화",
+            description: "모그모그★컬렉션",
             tomestones: 15,
         },
         {
             name: "특3등급 오래된 지도",
             category: "잡화",
+            description: "모그모그★컬렉션",
             tomestones: 15,
         },
         {
@@ -345,7 +350,7 @@ export default {
         {
             name: "아르마딜로 곡예사",
             category: "꼬마 친구",
-            description: "말리카 큰우물 (던전)",
+            description: "말리카 큰우물 (던전) [거래 가능]",
             tomestones: 7,
         },
         {
@@ -357,11 +362,13 @@ export default {
         {
             name: "쿠리에의 야채 X 5",
             category: "잡화",
+            description: "재배 [거래 가능]",
             tomestones: 5,
         },
         {
             name: "마법의 프리즘: 잡 마스터 X 10",
             category: "잡화",
+            description: "모그모그★컬렉션",
             tomestones: 1,
         },
     ]
