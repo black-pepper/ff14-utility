@@ -11,6 +11,21 @@ export default {
             startDate: new Date('2025-02-18'),
             endDate: new Date('2025-03-18'),
             url: "https://www.ff14.co.kr/events/fun/mogmog-collection/70x_part1"
-        }
+        },
+        {
+            title: "모험가 트레이닝 센터",
+            startDate: new Date('2025-01-21'),
+            endDate: new Date('2025-02-17'),
+            ReceivingDate: new Date('2025-03-17'),
+            url: "https://www.ff14.co.kr/events/2025/A0121"
+        },
+        {
+            title: "특별 보상 증정 이벤트 (정액제 누적 90일 사용)",
+            startDate: new Date('2024-06-25'),
+            endDate: new Date('2024-10-19'),
+            ReceivingDate: new Date('2025-03-31'),
+            url: "https://www.ff14.co.kr/events/2025/A0121"
+        },
     ]
+
 }

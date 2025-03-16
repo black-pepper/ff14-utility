@@ -17,7 +17,7 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          primary: '#F5F5F5', // 🔥 예시: 주황색으로 변경
+          primary: '#F5F5F5',
         },
       },
     },

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import config from '@/config/moogleConfig';
-import { computed, ref, watch, onMounted, watchEffect } from 'vue';
+import { computed, ref, watch, onMounted, watchEffect, onBeforeMount, reactive } from 'vue';
+import axios from 'axios';
 //config.rewards의 개수만큼 0인 배열 생성
 const counts = ref<number[]>(Array(config.rewards.length).fill(0));
 const panels = ref([0]);
+const rewards = reactive(config.rewards);
 
 const calculateTomestones = computed(() =>
   counts.value.map((count, index) => count * config.rewards[index].tomestones)
@@ -39,7 +41,7 @@ watch(counts, saveToLocalStorage, { deep: true });
 const sorted = ref('');
 const direction = ref('');
 const rewardsWithIndex = computed(() =>
-  config.rewards.map((reward, index) => ({ ...reward, originalIndex: index }))
+  rewards.map((reward, index) => ({ ...reward, originalIndex: index }))
 );
 
 const changeSort = (value: string) => {
@@ -70,6 +72,33 @@ const sortedRewards = computed(() => {
     return 0;
   });
 });
+
+//config에 price데이터 추가하기
+const getPrice = async () => {
+  const results = await getAllPricesResponse();
+  const itemIdMap = new Map();
+  results.forEach((item) => {
+    itemIdMap.set(item.itemId, item);
+  });
+
+  rewards.forEach((reward) => {
+    if (reward.itemId) {
+      const item = itemIdMap.get(reward.itemId);
+      reward.price = item.nq ? item.nq.recentPurchase.region.price : 'error';
+    } else {
+      reward.price = null;
+    }
+  });
+};
+
+const getAllPricesResponse = async () => {
+  const itemIdList = rewards.map(reward => reward.itemId).filter(itemId => itemId);
+  const response = await axios.get(`https://universalis.app/api/v2/aggregated/한국/${itemIdList}`);
+  return response.data.results;
+};
+
+const visibleRecentPrice = ref(false);
+watch(visibleRecentPrice,() => { if(visibleRecentPrice.value) getPrice() });
 </script>
 
 <template>
@@ -94,15 +123,16 @@ const sortedRewards = computed(() => {
     <v-table variant="outlined" density="compact" height="500" fixed-header>
       <thead>
         <tr>
-          <th class="text-center" @click="changeSort('category')">분류<span v-if="sorted === 'category'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
-          <th class="text-center" @click="changeSort('name')">아이템<span v-if="sorted === 'name'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
-          <th class="text-center" @click="changeSort('tomestones')">석판 수<span v-if="sorted === 'tomestones'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th class="text-center" @click="changeSort('category')" :style="{ cursor: 'pointer' }">분류<span v-if="sorted === 'category'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th class="text-center" @click="changeSort('name')" :style="{ cursor: 'pointer' }">아이템<span v-if="sorted === 'name'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th v-if="visibleRecentPrice" class="text-center" @click="changeSort('price')">최근 거래가<span v-if="sorted === 'price'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th class="text-center" @click="changeSort('tomestones')" :style="{ cursor: 'pointer' }">석판 수<span v-if="sorted === 'tomestones'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center">개수</th>
           <th class="text-center">석판 합계</th>
         </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, index) in sortedRewards" :key="item.originalIndex" :class="rowStyles[item.originalIndex]">
+      <tr v-for="(item) in sortedRewards" :key="item.originalIndex" :class="rowStyles[item.originalIndex]">
         <td class="text-center">{{ item.category }}</td>
         <td class="text-center" style="cursor:pointer">
           <v-tooltip v-if="item.description" :text="item.description">
@@ -111,6 +141,11 @@ const sortedRewards = computed(() => {
             </template>
           </v-tooltip>
           <span v-else>{{ item.name }}</span>
+          <span v-if="item.itemId">*</span>
+        </td>
+        <td class="text-center" v-if="visibleRecentPrice">
+          <a v-if="item.price" :href="'https://universalis.app/market/'+item.itemId" target="_blank">{{ item.price.toLocaleString('ko-KR') }}</a>
+          <span v-else>-</span>
         </td>
         <td class="text-center">{{ item.tomestones }}</td>
         <td class="text-center" style="max-width: 150px; min-width: 80px;">
@@ -126,10 +161,19 @@ const sortedRewards = computed(() => {
       </tr>
     </tbody>
     </v-table>
-    <div style="color:grey; margin-top: 10px; font-size: 0.8rem;">
-      ※ 아이템명에 마우스를 올리면 입수 방법이 표시됩니다. <br>
-      ※ 분류, 아이템, 석판 수를 클릭하면 정렬됩니다.
-    </div>
+  
+    <v-row justify="space-between" align="center">
+      <v-col cols="auto">
+        <div style="color:grey; margin-top: 10px; font-size: 0.8rem;">
+          ※ 아이템명에 마우스를 올리면 입수 방법이 표시됩니다. <br>
+          ※ 분류, 아이템, 석판 수, 최근 거래가를 클릭하면 정렬됩니다. <br>
+          ※ *표시가 있는 아이템은 거래 가능한 아이템이며, 표시된 거래가는 universalis에서 제공하는 데이터입니다.
+        </div>
+      </v-col>
+      <v-col cols="auto">
+        <v-checkbox style="margin-right: 20px;" v-model="visibleRecentPrice" label="최근 거래가 표시하기" density="compact"/>
+      </v-col>
+    </v-row>
   </v-expansion-panel-text>
   </v-expansion-panel>
   </v-expansion-panels>
