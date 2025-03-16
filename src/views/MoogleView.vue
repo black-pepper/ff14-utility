@@ -84,7 +84,7 @@ const getPrice = async () => {
   rewards.forEach((reward) => {
     if (reward.itemId) {
       const item = itemIdMap.get(reward.itemId);
-      reward.price = item.nq ? item.nq.recentPurchase.region.price : 'error';
+      reward.price = item.nq ? item.nq.minListing.region.price : 'error';
     } else {
       reward.price = null;
     }
@@ -125,7 +125,7 @@ watch(visibleRecentPrice,() => { if(visibleRecentPrice.value) getPrice() });
         <tr>
           <th class="text-center" @click="changeSort('category')" :style="{ cursor: 'pointer' }">분류<span v-if="sorted === 'category'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center" @click="changeSort('name')" :style="{ cursor: 'pointer' }">아이템<span v-if="sorted === 'name'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
-          <th v-if="visibleRecentPrice" class="text-center" @click="changeSort('price')">최근 거래가<span v-if="sorted === 'price'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th v-if="visibleRecentPrice" class="text-center" @click="changeSort('price')">장터 최저가<span v-if="sorted === 'price'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center" @click="changeSort('tomestones')" :style="{ cursor: 'pointer' }">석판 수<span v-if="sorted === 'tomestones'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center">개수</th>
           <th class="text-center">석판 합계</th>
@@ -166,12 +166,12 @@ watch(visibleRecentPrice,() => { if(visibleRecentPrice.value) getPrice() });
       <v-col cols="auto">
         <div style="color:grey; margin-top: 10px; font-size: 0.8rem;">
           ※ 아이템명에 마우스를 올리면 입수 방법이 표시됩니다. <br>
-          ※ 분류, 아이템, 석판 수, 최근 거래가를 클릭하면 정렬됩니다. <br>
-          ※ *표시가 있는 아이템은 거래 가능한 아이템이며, 표시된 거래가는 universalis에서 제공하는 데이터입니다.
+          ※ 분류, 아이템, 석판 수, 장터 최저가를 클릭하면 정렬됩니다. <br>
+          ※ *표시가 있는 아이템은 거래 가능한 아이템이며, 표시된 장터 최저가는 universalis에서 제공하는 데이터입니다.
         </div>
       </v-col>
       <v-col cols="auto">
-        <v-checkbox style="margin-right: 20px;" v-model="visibleRecentPrice" label="최근 거래가 표시하기" density="compact"/>
+        <v-checkbox style="margin-right: 20px;" v-model="visibleRecentPrice" label="장터 최저가 표시하기" density="compact"/>
       </v-col>
     </v-row>
   </v-expansion-panel-text>
