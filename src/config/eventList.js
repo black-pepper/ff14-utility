@@ -24,7 +24,7 @@ export default {
             startDate: new Date('2024-06-25'),
             endDate: new Date('2024-10-19'),
             ReceivingDate: new Date('2025-03-31'),
-            url: "https://www.ff14.co.kr/events/2025/A0121"
+            url: "https://www.ff14.co.kr/events/2024/juneshop"
         },
     ]
 
