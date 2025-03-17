@@ -12,13 +12,14 @@ const formatDate = (date) => {
 };
 
 const goEvent = (url) =>  window.open(url, "_blank");
-// 진행중인 이벤트 리스트 컴퓨티드로 반환
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 const ongoingEvents = computed(() => {
-  return eventList.filter((event) => new Date(event.endDate) >= new Date());
+  return eventList.filter((event) => event.endDate >= today);
 });
-// 보상수령기간 이벤트 리스트 컴퓨티드로 반환
 const rewardEvents = computed(() => {
-  return eventList.filter((event) => new Date(event.endDate) < new Date() && new Date(event.ReceivingDate) >= new Date());
+  return eventList.filter((event) => event.endDate < today && event.ReceivingDate >= today);
 });
 </script>
 
