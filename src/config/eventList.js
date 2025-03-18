@@ -1,6 +1,13 @@
 export default {
     eventList: [
         {
+            title: "미지의 모험을 공략하자!",
+            startDate: new Date('2025-03-18T12:00:00'),
+            endDate: new Date('2025-04-14'),
+            ReceivingDate: new Date('2025-05-12'),
+            url: "https://www.ff14.co.kr/events/2025/v7_1_promotion_all"
+        },
+        {
             title: "프린세스데이&알 사냥 축제",
             startDate: new Date('2025-03-04'),
             endDate: new Date('2025-03-24'),
@@ -11,13 +18,6 @@ export default {
             startDate: new Date('2025-02-18'),
             endDate: new Date('2025-03-18'),
             url: "https://www.ff14.co.kr/events/fun/mogmog-collection/70x_part1"
-        },
-        {
-            title: "모험가 트레이닝 센터",
-            startDate: new Date('2025-01-21'),
-            endDate: new Date('2025-02-17'),
-            ReceivingDate: new Date('2025-03-17'),
-            url: "https://www.ff14.co.kr/events/2025/A0121"
         },
         {
             title: "특별 보상 증정 이벤트 (정액제 누적 90일 사용)",

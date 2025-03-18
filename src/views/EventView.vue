@@ -5,7 +5,7 @@ import { useMissionStore } from '@/composables/useMissionStore';
 import { calculateScore, getRowStyle } from '@/utils/useMissionUtils';
 import { useScoreCalculations } from '@/composables/useScoreCalculations';
 
-const { missionStatus, uniqueMissionStatus, panels, selectedPeriod, countPoint, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
+const { missionStatus, weeklyMissionsStatus, uniqueMissionStatus, panels, selectedPeriod, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
 
 const today = new Date();
 function generatePeriodList(startDate, endDate) {
@@ -21,13 +21,17 @@ function generatePeriodList(startDate, endDate) {
   return dates;
 }
 const periodList = generatePeriodList(today, config.endDate); 
-const countPointList = Array.from({ length: config.missions.length }, (_, i) => i + 1);
+const countPointList = Array.from({ length: config.minMissionCount!==null?config.minMissionCount:config.missions.length }, (_, i) => i + 1);
+const repeatCount = ref(config.minMissionCount!==null?config.minMissionCount:countPointList.length);
+
+//이벤트기간이 총 몇주인지 계산
+const totalWeeks = Math.ceil((config.endDate - config.startDate) / (1000 * 60 * 60 * 24 * 7));
 
 const {
       totalScoreYesterday,
       expectedScore,
       totalScore
-    } = useScoreCalculations(config, missionStatus, uniqueMissionStatus, selectedPeriod, countPoint);
+    } = useScoreCalculations(config, missionStatus,weeklyMissionsStatus, uniqueMissionStatus, selectedPeriod, repeatCount);
 
 // 해당 날짜의 체크박스가 모두 선택된 상태인지 확인
 const isAllChecked = (index) => {
@@ -45,7 +49,10 @@ onMounted(() => {
 });
 
 // 로컬 데이터 저장하기
-watch([missionStatus, uniqueMissionStatus, panels], saveToLocalStorage, { deep: true });
+watch(missionStatus, saveToLocalStorage, { deep: true });
+watch(weeklyMissionsStatus, saveToLocalStorage, { deep: true });
+watch(uniqueMissionStatus, saveToLocalStorage, { deep: true });
+watch(panels, saveToLocalStorage, { deep: true });
 </script>
 
 <template>
@@ -72,6 +79,31 @@ watch([missionStatus, uniqueMissionStatus, panels], saveToLocalStorage, { deep: 
       </v-expansion-panel-text>
     <!-- <v-card variant="outlined" style="border-color: lightgray; overflow-y: auto;" max-height="500"> -->
     </v-expansion-panel>
+
+    <v-expansion-panel>
+      <v-expansion-panel-title v-slot="{ expanded }">
+        <h3>{{ config.weeklyMissionTitle }}</h3>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <v-table variant="outlined" density="compact" fixed-header>
+          <thead>
+            <tr>
+              <th class="text-center">목록</th>
+              <th class="text-center" v-for="i in Array.from({ length: totalWeeks }, (_, index) => index + 1)">{{ i }}주차</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(missionStatus, missionIndex) in weeklyMissionsStatus" :key="missionIndex">
+              <td class="text-center">{{ config.weeklyMissions[missionIndex].title }}</td>
+              <td class="text-center" v-for="(status, index) in missionStatus" :key="index">
+                <div class="checkbox-wrapper"><v-checkbox v-model="missionStatus[index]" density="compact"/></div>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+
     <v-expansion-panel>
       <v-expansion-panel-title v-slot="{ expanded }">
         <h3>{{ config.missionTitle }}</h3>
@@ -123,13 +155,13 @@ watch([missionStatus, uniqueMissionStatus, panels], saveToLocalStorage, { deep: 
       ></v-select>
     </v-col>
     <v-col cols="auto">
-      <span>까지</span>
+      <span>까지 {{ config.missionTitle }}</span>
     </v-col>
     <v-col cols="auto">
       <v-select  
         density="compact"
         variant="underlined"
-        v-model="countPoint"
+        v-model="repeatCount"
         :items="countPointList"
         style="max-width: 80px;"
       ></v-select>
@@ -143,7 +175,6 @@ watch([missionStatus, uniqueMissionStatus, panels], saveToLocalStorage, { deep: 
   </v-row>
     </v-expansion-panel-title>
   <v-expansion-panel-text>
-    ??
   </v-expansion-panel-text>
   </v-expansion-panel>
   </v-expansion-panels>

@@ -15,12 +15,14 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import config from "@/config/eventConfig";
+import eventConfig from "@/config/eventConfig";
 
 defineProps({
   modelValue: Boolean, // v-model을 위한 props
 });
 
 const menuItems = [
+  { text: eventConfig.eventName, to: "/event" },
   { text: "모그모그★컬렉션", to: "/moogle" },
 ];
 

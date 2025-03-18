@@ -19,7 +19,7 @@ const ongoingEvents = computed(() => {
   return eventList.filter((event) => event.endDate >= today);
 });
 const rewardEvents = computed(() => {
-  return eventList.filter((event) => event.endDate < today && event.ReceivingDate >= today);
+  return eventList.filter((event) => event.endDate < today && event.ReceivingDate != null && event.ReceivingDate >= today);
 });
 </script>
 

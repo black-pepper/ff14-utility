@@ -1,47 +1,46 @@
 // composables/useMissionStore.ts
 import { reactive, ref, computed, watch, onMounted } from 'vue';
 import config from '@/config/eventConfig';
+import { saveData, loadData } from './localStorageUtil';
 
 export function useMissionStore() {
   const missionStatus = reactive(generateData(config.startDate, config.endDate))
+  const weeklyMissionsStatus = reactive(generateWeekly(config.startDate, config.endDate));
   const uniqueMissionStatus = reactive(new Array(config.uniqueMissions.length).fill(false));
-  const panels = ref([0, 1]);
+  const panels = ref([0, 1, 2]);
 
   const selectedPeriod = ref(config.endDate.toLocaleDateString('en-CA'));
-  const countPoint = ref(6);
 
   // 로컬 데이터 불러오기
-const loadFromLocalStorage = () => {
-    const savedMissionStatus = localStorage.getItem('missionStatus');
-    const savedUniqueMissionStatus = localStorage.getItem('uniqueMissionStatus');
-    const savedLastSaveTime = localStorage.getItem('lastSaveTime');
-    const savedPanels = localStorage.getItem('panels');
-    if (savedMissionStatus) {
-      // 저장된 데이터가 이벤트 시작일보다 이전인 경우, 저장된 데이터를 삭제
-      if (savedLastSaveTime && new Date(savedLastSaveTime) < new Date(config.startDate)) {
-        localStorage.removeItem('missionStatus');
-        localStorage.removeItem('uniqueMissionStatus');
-        localStorage.removeItem('panels')
-        return;
-      } else {
-        // 저장된 데이터가 있으면 불러옴
-        missionStatus.splice(0, missionStatus.length, ...JSON.parse(savedMissionStatus));
-        uniqueMissionStatus.splice(0, uniqueMissionStatus.length, ...JSON.parse(savedUniqueMissionStatus));
-        panels.value = JSON.parse(savedPanels);
-      }
+  const loadFromLocalStorage = () => {
+    const savedData = loadData("event");
+    if (savedData && saveData.length > 0) {  // savedData.value로 접근
+      // missionStatus = reactive(savedData.missionStatus);
+      // uniqueMissionStatus = reactive(savedData.uniqueMissionStatus);
+      // panels.value = savedData.panels;
+      missionStatus.splice(0, missionStatus.length, ...savedData.missionStatus);
+      weeklyMissionsStatus.splice(0, weeklyMissionsStatus.length, ...savedData.weeklyMissionsStatus);
+      uniqueMissionStatus.splice(0, uniqueMissionStatus.length, ...savedData.uniqueMissionStatus);
+      panels.value = savedData.panels; // panels는 ref이므로 .value를 사용해야 함
+    } else {
+      console.log('No saved data found.');
     }
   };
-
+  
   const saveToLocalStorage = () => {
-    localStorage.setItem('missionStatus', JSON.stringify(missionStatus));
-    localStorage.setItem('uniqueMissionStatus', JSON.stringify(uniqueMissionStatus));
-    localStorage.setItem('panels', JSON.stringify(panels.value));
+    const event = {
+      missionStatus,
+      weeklyMissionsStatus,
+      uniqueMissionStatus,
+      panels: panels.value
+    };
+    saveData("event", event, config.endDate);  // config.endDate가 Date면 저장 함수에서 getTime() 처리
   };
 
   watch([missionStatus, uniqueMissionStatus], saveToLocalStorage, { deep: true });
   onMounted(loadFromLocalStorage);
 
-  return { missionStatus, uniqueMissionStatus, panels, selectedPeriod, countPoint, saveToLocalStorage, loadFromLocalStorage };
+  return { missionStatus, weeklyMissionsStatus, uniqueMissionStatus, panels, selectedPeriod, saveToLocalStorage, loadFromLocalStorage };
 }
 
 function generateData(startDate, endDate) {
@@ -54,4 +53,13 @@ function generateData(startDate, endDate) {
       currentDate.setDate(currentDate.getDate() + 1); // 하루 증가
     }
     return dates;
+}
+
+function generateWeekly(startDate, endDate) {
+  const status = [];
+  const diffWeeks = Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
+  for (let i = 0; i < config.weeklyMissions.length; i++){
+    status.push(Array(diffWeeks).fill(false));
+  }
+  return status;
 }
