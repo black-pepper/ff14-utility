@@ -167,7 +167,7 @@ watch(panels, saveToLocalStorage, { deep: true });
       ></v-select>
     </v-col>
     <v-col cols="auto">
-      <span>개씩 완료 시 예상 수: {{expectedScore}} &nbsp; (어제 까지의 합계: {{ totalScoreYesterday }})</span>
+      <span>개씩 완료 시 예상 수: {{expectedScore}}</span>
     </v-col>
     <v-col cols="auto">
       <span></span>

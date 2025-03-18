@@ -50,7 +50,7 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
 
   const totalScore = computed(() =>
     missionStatus.reduce((total, item) => total + item.checks.filter(Boolean).length, 0) +
-    uniqueMissionStatus.reduce((sum, status, i) => sum + (status ? config.uniqueMissions[i].score : 0), 0)
+    uniqueMissionsScore.value + weeklyMissionsScore.value
   );
 
   return {
