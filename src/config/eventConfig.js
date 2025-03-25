@@ -23,7 +23,8 @@ export default {
             description: "'크리스탈라인 컨플릭트' 3회 완료",
         }
     ],
-    minMissionCount: 2,
+    minMissionCount: 0,
+    maxMissionCount: 2,
     uniqueMissionTitle: '한정 미션',
     uniqueMissions: [
         {

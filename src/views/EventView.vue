@@ -2,10 +2,10 @@
 import { ref, computed, reactive, onMounted, watch } from 'vue'
 import config from '@/config/eventConfig';
 import { useMissionStore } from '@/composables/useMissionStore';
-import { calculateScore, getRowStyle } from '@/utils/useMissionUtils';
+import { getRowStyle } from '@/utils/useMissionUtils';
 import { useScoreCalculations } from '@/composables/useScoreCalculations';
 
-const { missionStatus, weeklyMissionsStatus, uniqueMissionStatus, panels, selectedPeriod, saveToLocalStorage, loadFromLocalStorage } = useMissionStore();
+const { missionStatus, weeklyMissionsStatus, uniqueMissionStatus, panels, selectedPeriod, saveToLocalStorage, loadFromLocalStorage} = useMissionStore();
 
 const today = new Date();
 function generatePeriodList(startDate, endDate) {
@@ -21,8 +21,8 @@ function generatePeriodList(startDate, endDate) {
   return dates;
 }
 const periodList = generatePeriodList(today, config.endDate); 
-const countPointList = Array.from({ length: config.minMissionCount!==null?config.minMissionCount:config.missions.length }, (_, i) => i + 1);
-const repeatCount = ref(config.minMissionCount!==null?config.minMissionCount:countPointList.length);
+const countPointList = Array.from({ length: config.maxMissionCount!==null?config.maxMissionCount:config.missions.length }, (_, i) => i + 1);
+const repeatCount = ref(config.maxMissionCount!==null?config.maxMissionCount:countPointList.length);
 
 //이벤트기간이 총 몇주인지 계산
 const totalWeeks = Math.ceil((config.endDate - config.startDate) / (1000 * 60 * 60 * 24 * 7));
@@ -30,7 +30,8 @@ const totalWeeks = Math.ceil((config.endDate - config.startDate) / (1000 * 60 * 
 const {
       totalScoreYesterday,
       expectedScore,
-      totalScore
+      totalScore,
+      dailyScore
     } = useScoreCalculations(config, missionStatus,weeklyMissionsStatus, uniqueMissionStatus, selectedPeriod, repeatCount);
 
 // 해당 날짜의 체크박스가 모두 선택된 상태인지 확인
@@ -132,7 +133,7 @@ watch(panels, saveToLocalStorage, { deep: true });
           <td class="text-center" v-for="(c, index) in item.checks" :key="index">
             <div class="checkbox-wrapper"><v-checkbox v-model="item.checks[index]" density="compact"/></div>
           </td>
-          <td class="text-center">{{ calculateScore(item) }}</td>
+          <td class="text-center">{{ dailyScore(item) }}</td>
         </tr>
       </tbody>
     </v-table>

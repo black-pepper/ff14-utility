@@ -32,10 +32,17 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
 
   const totalScoreYesterday = computed(() =>
     missionStatus.slice(0, yesterdayIndex.value).reduce((total, item) => {
-      let score = item.checks.filter(Boolean).length; // check 배열에서 true 개수 세기
+      let score = dailyScore(item) // check 배열에서 true 개수 세기
       return total + score;
     }, 0) + uniqueMissionsScore.value + weeklyMissionsScore.value
   );
+
+  const dailyScore = (item) => {
+    if(config.maxMissionCount != null) {
+      return Math.min(item.checks.filter(Boolean).length, config.maxMissionCount);
+    }
+    return item.checks.filter(Boolean).length;
+  };
 
   const selectedDateIndex = computed(() => {
     const selectedDate = new Date(selectedPeriod.value);
@@ -49,7 +56,7 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
   });
 
   const totalScore = computed(() =>
-    missionStatus.reduce((total, item) => total + item.checks.filter(Boolean).length, 0) +
+    missionStatus.reduce((total, item) => total + dailyScore(item), 0) +
     uniqueMissionsScore.value + weeklyMissionsScore.value
   );
 
@@ -59,6 +66,7 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
     yesterdayIndex,
     selectedDateIndex,
     expectedScore,
-    totalScore
+    totalScore,
+    dailyScore
   };
 }
