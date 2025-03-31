@@ -2,8 +2,8 @@ export default {
     eventList: [
         {
             title: "프린세스데이",
-            startDate: new Date('2024-03-31'),
-            endDate: new Date('2024-04-14'),
+            startDate: new Date('2025-03-31'),
+            endDate: new Date('2025-04-14'),
             url: "https://www.ff14.co.kr/events/fun/2025/princessday"
         },
         {
