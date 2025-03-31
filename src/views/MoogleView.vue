@@ -29,7 +29,7 @@ const loadFromLocalStorage = () => {
 };
 
 const rowStyles = computed(() =>
-  counts.value.map(count => count != 0 ? 'bg-primary' : '')
+  counts.value.map(count => count != 0 ? 'bg-highlights' : '')
 );
 
 onMounted(() => {
@@ -98,7 +98,12 @@ const getAllPricesResponse = async () => {
 };
 
 const visibleRecentPrice = ref(false);
-watch(visibleRecentPrice,() => { if(visibleRecentPrice.value) getPrice() });
+const isLoading = ref(false);
+watch(visibleRecentPrice,() => { 
+  isLoading.value = true;
+  if(visibleRecentPrice.value) getPrice() 
+  isLoading.value = false;
+});
 </script>
 
 <template>
@@ -171,7 +176,13 @@ watch(visibleRecentPrice,() => { if(visibleRecentPrice.value) getPrice() });
         </div>
       </v-col>
       <v-col cols="auto">
-        <v-checkbox style="margin-right: 20px;" v-model="visibleRecentPrice" label="장터 최저가 표시하기" density="compact"/>
+        <v-switch 
+        label="장터 최저가 표시하기" 
+        v-model="visibleRecentPrice" 
+        density="compact" 
+        color="primary"
+        :loading="isLoading ? 'warning' : false"
+        ></v-switch>
       </v-col>
     </v-row>
   </v-expansion-panel-text>
