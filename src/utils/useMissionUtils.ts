@@ -5,5 +5,5 @@ export function getRowStyle(item) {
   const itemDate = new Date(item.date);
   itemDate.setHours(0, 0, 0, 0);
   
-  return itemDate.getTime() === today.getTime() ? 'bg-primary' : '';
+  return itemDate.getTime() === today.getTime() ? 'bg-highlights' : '';
 }

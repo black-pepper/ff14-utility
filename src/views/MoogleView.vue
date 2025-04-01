@@ -130,7 +130,7 @@ watch(visibleRecentPrice,() => {
         <tr>
           <th class="text-center" @click="changeSort('category')" :style="{ cursor: 'pointer' }">분류<span v-if="sorted === 'category'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center" @click="changeSort('name')" :style="{ cursor: 'pointer' }">아이템<span v-if="sorted === 'name'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
-          <th v-if="visibleRecentPrice" class="text-center" @click="changeSort('price')">장터 최저가<span v-if="sorted === 'price'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
+          <th v-if="visibleRecentPrice" class="text-center" @click="changeSort('price')" :style="{ cursor: 'pointer' }">장터 최저가<span v-if="sorted === 'price'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center" @click="changeSort('tomestones')" :style="{ cursor: 'pointer' }">석판 수<span v-if="sorted === 'tomestones'">{{ direction === 'asc' ? '▴' : '▾' }}</span></th>
           <th class="text-center">개수</th>
           <th class="text-center">석판 합계</th>
@@ -177,7 +177,7 @@ watch(visibleRecentPrice,() => {
       </v-col>
       <v-col cols="auto">
         <v-switch 
-        label="장터 최저가 표시하기" 
+        label="장터 최저가 표시" 
         v-model="visibleRecentPrice" 
         density="compact" 
         color="primary"
