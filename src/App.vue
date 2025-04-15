@@ -1,11 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app density="compact" :elevation="0" color="grey-lighten-4">
-      <v-btn icon @click="drawer = !drawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-      <v-toolbar-title @click="$router.push('/')" :style="{ cursor: 'pointer' }">FF14 이벤트 체크리스트</v-toolbar-title>
-    </v-app-bar>
+    <AppBar @toggleDrawer="drawer = !drawer" />
     <AppDrawer v-model="drawer" />
     <v-main>
       <router-view />

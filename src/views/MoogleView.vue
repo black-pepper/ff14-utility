@@ -79,7 +79,7 @@ const getPrice = async () => {
   const itemIdMap = new Map();
   results.forEach((item) => {
     itemIdMap.set(item.itemId, item);
-  });
+});
 
   rewards.forEach((reward) => {
     if (reward.itemId) {
@@ -99,9 +99,9 @@ const getAllPricesResponse = async () => {
 
 const visibleRecentPrice = ref(false);
 const isLoading = ref(false);
-watch(visibleRecentPrice,() => { 
+watch(visibleRecentPrice, async () => { 
   isLoading.value = true;
-  if(visibleRecentPrice.value) getPrice() 
+  if(visibleRecentPrice.value) await getPrice() 
   isLoading.value = false;
 });
 </script>
