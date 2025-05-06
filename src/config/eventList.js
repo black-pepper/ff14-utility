@@ -1,17 +1,23 @@
 export default {
     eventList: [
         {
+            title: "골드 소서 축제",
+            startDate: new Date('2025-05-06T12:00:00'),
+            endDate: new Date('2025-05-19'),
+            url: "https://www.ff14.co.kr/events/fun/2025/goldsaucer"
+        },
+        {
+            title: "2025 가구 디자인 콘테스트",
+            startDate: new Date('2025-04-18'),
+            endDate: new Date('2025-05-18'),
+            url: "https://www.ff14.co.kr/events/2025/FurnishingDesignContest"
+        },
+        {
             title: "'또 하나의 미래' 이벤트",
             startDate: new Date('2025-04-15T12:00:00'),
             endDate: new Date('2025-05-12'),
             ReceivingDate: new Date('2025-07-07'),
             url: "https://www.ff14.co.kr/events/2025/FuturesRewritten"
-        },
-        {
-            title: "2025 알 사냥 축제",
-            startDate: new Date('2025-04-15T12:00:00'),
-            endDate: new Date('2025-04-28'),
-            url: "https://www.ff14.co.kr/events/fun/2025/egghunts"
         },
         {
             title: "파이널판타지14 x 처갓집 양념 치킨",
