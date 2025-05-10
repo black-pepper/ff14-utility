@@ -49,7 +49,7 @@ function generateData(startDate, endDate) {
     currentDate.setHours(0, 0, 0, 0);
     while (currentDate <= endDate) {
       const formattedDate = currentDate.toLocaleDateString('en-CA').split('T')[0]; // YYYY-MM-DD 형식 변환
-      dates.push({ date: formattedDate, checks: Array(config.missions.length).fill(false) });
+      dates.push({ date: formattedDate, checks: Array(config.missions.length).fill(0) });
       currentDate.setDate(currentDate.getDate() + 1); // 하루 증가
     }
     return dates;
@@ -59,7 +59,7 @@ function generateWeekly(startDate, endDate) {
   const status = [];
   const diffWeeks = Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
   for (let i = 0; i < config.weeklyMissions.length; i++){
-    status.push(Array(diffWeeks).fill(false));
+    status.push(Array(diffWeeks).fill(0));
   }
   return status;
 }

@@ -1,10 +1,30 @@
 export default {
     eventList: [
         {
-            title: "프린세스데이",
-            startDate: new Date('2025-03-31'),
-            endDate: new Date('2025-04-14'),
-            url: "https://www.ff14.co.kr/events/fun/2025/princessday"
+            title: "골드 소서 축제",
+            startDate: new Date('2025-05-06T12:00:00'),
+            endDate: new Date('2025-05-19'),
+            url: "https://www.ff14.co.kr/events/fun/2025/goldsaucer"
+        },
+        {
+            title: "2025 가구 디자인 콘테스트",
+            startDate: new Date('2025-04-18'),
+            endDate: new Date('2025-05-18'),
+            url: "https://www.ff14.co.kr/events/2025/FurnishingDesignContest"
+        },
+        {
+            title: "'또 하나의 미래' 이벤트",
+            startDate: new Date('2025-04-15T12:00:00'),
+            endDate: new Date('2025-05-12'),
+            ReceivingDate: new Date('2025-07-07'),
+            url: "https://www.ff14.co.kr/events/2025/FuturesRewritten"
+        },
+        {
+            title: "파이널판타지14 x 처갓집 양념 치킨",
+            startDate: new Date('2025-03-25T11:00:00'),
+            endDate: new Date('2025-04-21'),
+            ReceivingDate: new Date('2025-12-31'),
+            url: "https://www.ff14.co.kr/events/2025/cheogajip"
         },
         {
             title: "미지의 모험을 공략하자!",
@@ -18,14 +38,7 @@ export default {
             startDate: new Date('2025-02-18'),
             endDate: new Date('2025-03-18'),
             url: "https://www.ff14.co.kr/events/fun/mogmog-collection/70x_part1"
-        },
-        {
-            title: "특별 보상 증정 이벤트 (정액제 누적 90일 사용)",
-            startDate: new Date('2024-06-25'),
-            endDate: new Date('2024-10-19'),
-            ReceivingDate: new Date('2025-03-31'),
-            url: "https://www.ff14.co.kr/events/2024/juneshop"
-        },
+        }
     ]
 
 }

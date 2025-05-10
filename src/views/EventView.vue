@@ -70,16 +70,16 @@ watch(panels, saveToLocalStorage, { deep: true });
     </v-row>
   </v-container>
     <v-expansion-panels variant="accordion" v-model="panels" multiple>
-    <v-expansion-panel>
+    <!-- <v-expansion-panel>
       <v-expansion-panel-title v-slot="{ expanded }">
         <h3>{{ config.uniqueMissionTitle }}</h3>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-checkbox v-for="(mission, index) in config.uniqueMissions" 
       :key="index" v-model="uniqueMissionStatus[index]" :label="mission.title" density="compact"/>
-      </v-expansion-panel-text>
+      </v-expansion-panel-text> -->
     <!-- <v-card variant="outlined" style="border-color: lightgray; overflow-y: auto;" max-height="500"> -->
-    </v-expansion-panel>
+    <!-- </v-expansion-panel> -->
 
     <v-expansion-panel>
       <v-expansion-panel-title v-slot="{ expanded }">
@@ -97,7 +97,17 @@ watch(panels, saveToLocalStorage, { deep: true });
             <tr v-for="(missionStatus, missionIndex) in weeklyMissionsStatus" :key="missionIndex">
               <td class="text-center">{{ config.weeklyMissions[missionIndex].title }}</td>
               <td class="text-center" v-for="(status, index) in missionStatus" :key="index">
-                <div class="checkbox-wrapper"><v-checkbox v-model="missionStatus[index]" density="compact"/></div>
+                <div class="checkbox-wrapper">
+                    <v-select  
+                    density="compact"
+                    variant="underlined"
+                    v-model="missionStatus[index]"
+                    :items="Array.from({ length: 10 }, (_, i) => i)"
+                    style="max-width: 50px;"
+                  ></v-select>
+                </div>
+                
+                <!-- <div class="checkbox-wrapper"><v-checkbox v-model="missionStatus[index]" density="compact"/></div> -->
               </td>
             </tr>
           </tbody>

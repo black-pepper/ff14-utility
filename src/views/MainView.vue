@@ -16,7 +16,6 @@ const goEvent = (url) =>  window.open(url, "_blank");
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const ongoingEvents = computed(() => {
-  console.log(eventList)
   return eventList.filter((event) => event.endDate >= today);
 });
 const rewardEvents = computed(() => {

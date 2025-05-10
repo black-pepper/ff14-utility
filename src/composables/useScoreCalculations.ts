@@ -13,9 +13,7 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
       // 각 주차별로 체크된 값(true)의 개수를 세는 이중 반복문
       for (let i = 0; i < weeklyMissionsStatus.length; i++) {
         for (let j = 0; j < weeklyMissionsStatus[i].length; j++) {
-          if (weeklyMissionsStatus[i][j] === true) {
-            totalChecked++;
-          }
+          totalChecked += weeklyMissionsStatus[i][j]
         }
         result += totalChecked * config.weeklyMissions[i].score;
       }
@@ -39,9 +37,9 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
 
   const dailyScore = (item) => {
     if(config.maxMissionCount != null) {
-      return Math.min(item.checks.filter(Boolean).length, config.maxMissionCount);
+      return Math.min(item.checks.filter(Boolean).length*config.missionScore, config.maxMissionCount);
     }
-    return item.checks.filter(Boolean).length;
+    return item.checks.filter(Boolean).length*config.missionScore;
   };
 
   const selectedDateIndex = computed(() => {
@@ -52,7 +50,7 @@ export function useScoreCalculations(config, missionStatus, weeklyMissionsStatus
   });
 
   const expectedScore = computed(() => {
-    return totalScoreYesterday.value + (selectedDateIndex.value * countPoint.value);
+    return totalScoreYesterday.value + (selectedDateIndex.value * countPoint.value * config.missionScore);
   });
 
   const totalScore = computed(() =>
