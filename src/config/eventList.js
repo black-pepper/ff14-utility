@@ -1,6 +1,12 @@
 export default {
     eventList: [
         {
+            title: "2025 에오르제아 요리대회",
+            startDate: new Date('2025-05-13T12:00:00'),
+            endDate: new Date('2025-06-08'),
+            url: "https://www.ff14.co.kr/events/2025/A0513"
+        },
+        {
             title: "골드 소서 축제",
             startDate: new Date('2025-05-06T12:00:00'),
             endDate: new Date('2025-05-19'),

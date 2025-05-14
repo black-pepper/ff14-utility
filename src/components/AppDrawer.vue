@@ -22,7 +22,7 @@ defineProps({
 });
 
 const menuItems = [
-  { text: eventConfig.eventName, to: "/event" },
+  // { text: eventConfig.eventName, to: "/event" },
   { text: "모그모그★컬렉션", to: "/moogle" },
 ];
 
