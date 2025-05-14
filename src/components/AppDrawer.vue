@@ -3,7 +3,10 @@
     :model-value="modelValue" 
     @update:model-value="$emit('update:modelValue', $event)" 
     app 
-    permanent>
+    permanent
+    expand-on-hover = "true"
+    >
+    <v-list-item title="어느 모험가의 다이어리" subtitle="FF14 체크리스트"></v-list-item>
     <v-list>
       <v-list-item v-for="(item, index) in menuItems" :key="index" :to="item.to">
         <v-list-item-title>{{ item.text }}</v-list-item-title>
