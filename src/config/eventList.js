@@ -1,22 +1,23 @@
 export default {
     eventList: [
         {
-            title: "2025 에오르제아 요리대회",
-            startDate: new Date('2025-05-13T12:00:00'),
-            endDate: new Date('2025-06-08'),
-            url: "https://www.ff14.co.kr/events/2025/A0513"
+            title: "모그모그★컬렉션 ~환상과의 해후~",
+            startDate: new Date('2025-06-17T12:00:00'),
+            endDate: new Date('2025-07-15'),
+            url: "https://www.ff14.co.kr/events/fun/mogmog-collection/71x_part1"
         },
         {
-            title: "골드 소서 축제",
-            startDate: new Date('2025-05-06T12:00:00'),
-            endDate: new Date('2025-05-19'),
-            url: "https://www.ff14.co.kr/events/fun/2025/goldsaucer"
+            title: "'멸 어둠의 구름 격투전'자격증 취득 프로젝트",
+            startDate: new Date('2025-05-27T12:00:00'),
+            endDate: new Date('2025-06-23'),
+            ReceivingDate: new Date('2025-07-21'),
+            url: "https://www.ff14.co.kr/events/2025/A0527"
         },
         {
-            title: "2025 가구 디자인 콘테스트",
-            startDate: new Date('2025-04-18'),
-            endDate: new Date('2025-05-18'),
-            url: "https://www.ff14.co.kr/events/2025/FurnishingDesignContest"
+            title: "치지직 드롭스 이벤트",
+            startDate: new Date('2025-05-27'),
+            endDate: new Date('2025-06-23'),
+            url: "https://www.ff14.co.kr/news/event/view/654"
         },
         {
             title: "'또 하나의 미래' 이벤트",
@@ -31,20 +32,6 @@ export default {
             endDate: new Date('2025-04-21'),
             ReceivingDate: new Date('2025-12-31'),
             url: "https://www.ff14.co.kr/events/2025/cheogajip"
-        },
-        {
-            title: "미지의 모험을 공략하자!",
-            startDate: new Date('2025-03-18T12:00:00'),
-            endDate: new Date('2025-04-14'),
-            ReceivingDate: new Date('2025-05-12'),
-            url: "https://www.ff14.co.kr/events/2025/v7_1_promotion_all"
-        },
-        {
-            title: "모그모그★컬렉션 ~황금의 마전~",
-            startDate: new Date('2025-02-18'),
-            endDate: new Date('2025-03-18'),
-            url: "https://www.ff14.co.kr/events/fun/mogmog-collection/70x_part1"
         }
     ]
-
 }
