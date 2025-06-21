@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import config from '@/config/moogleConfig';
+import { saveData, loadData } from '@/composables/localStorageUtil';
 import { computed, ref, watch, onMounted, watchEffect, onBeforeMount, reactive } from 'vue';
 import axios from 'axios';
+
 //config.rewards의 개수만큼 0인 배열 생성
 const counts = ref<number[]>(Array(config.rewards.length).fill(0));
 const panels = ref([0]);
@@ -17,15 +19,21 @@ const calculateTotalTomestones = computed(() => {
 
 // counts 배열 로컬스토리지에 저장
 const saveToLocalStorage = () => {
-  localStorage.setItem('moogleCounts', JSON.stringify(counts.value));
+  // localStorage.setItem('moogleCounts', JSON.stringify(counts.value));
+  saveData("moogleCounts", counts.value, addDays(config.endDate, 7));
+  console.log("Counts saved to localStorage:", counts.value);
 };
+
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date); // 원본 유지
+  result.setDate(result.getDate() + days);
+  return result;
+}
 
 // 로컬스토리지에서 counts 배열 불러오기
 const loadFromLocalStorage = () => {
-  const savedCounts = localStorage.getItem('moogleCounts');
-  if (savedCounts) {
-    counts.value = JSON.parse(savedCounts);
-  }
+  counts.value = loadData('moogleCounts');
+  console.log("Counts load to localStorage:", counts.value);
 };
 
 const rowStyles = computed(() =>
