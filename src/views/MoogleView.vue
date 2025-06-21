@@ -17,11 +17,8 @@ const calculateTotalTomestones = computed(() => {
   return calculateTomestones.value.reduce((acc, cur) => acc + cur, 0)
 });
 
-// counts 배열 로컬스토리지에 저장
 const saveToLocalStorage = () => {
-  // localStorage.setItem('moogleCounts', JSON.stringify(counts.value));
   saveData("moogleCounts", counts.value, addDays(config.endDate, 7));
-  console.log("Counts saved to localStorage:", counts.value);
 };
 
 function addDays(date: Date, days: number): Date {
@@ -30,10 +27,11 @@ function addDays(date: Date, days: number): Date {
   return result;
 }
 
-// 로컬스토리지에서 counts 배열 불러오기
 const loadFromLocalStorage = () => {
-  counts.value = loadData('moogleCounts');
-  console.log("Counts load to localStorage:", counts.value);
+  const savedCounts = loadData('moogleCounts');
+  if (savedCounts) {
+    counts.value = savedCounts;
+  }
 };
 
 const rowStyles = computed(() =>
