@@ -144,6 +144,7 @@ export default {
             category: "탈것",
             description: "목수 레벨80 제작 (목수의 비전서:제7권 필요)",
             tomestones: 50,
+            itemId: 26782,
         },
         {
             name: "흐레스벨그 인형",
